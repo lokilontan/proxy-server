@@ -1,0 +1,101 @@
+<style type="text/css">
+    body, h1, h2, h3, h4, h5, h6 {
+  font-family: Calibri, sans-serif;
+}
+
+pre {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-left: 3px solid #699;
+    color: #666;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
+}
+</style>
+
+<h3 id="code-instructions-">Code Instructions:</h3>
+<p>This code must be taken as a guide to realize the general flow of the program, just filling in the blank sections may not work for you so you can make edits to the skeleton code however you see fit or write your own code from scratch. Please follow the comments on the code for more details.</p>
+<h3 id="updated-proxy-server-skeleton-code">Updated proxy server skeleton code</h3>
+<pre><code><span class="hljs-comment"># Import necessary packages</span>
+<span class="hljs-comment"># All methods from the socket package have been imported as </span>
+<span class="hljs-comment"># an example</span>
+<span class="hljs-keyword">from</span> socket <span class="hljs-keyword">import</span> *
+
+<span class="hljs-comment"># Optional: take ip address and port as command line arguments or </span>
+<span class="hljs-comment"># hardcode them in your program, you have various options: localhost,</span>
+<span class="hljs-comment"># custom ip address or ip address of your machine, the latter lets you</span>
+<span class="hljs-comment"># access your server from other devices in the same network</span>
+
+<span class="hljs-comment"># Create a server socket, bind it to a port and start listening</span>
+<span class="hljs-comment"># use AF_INET for address family and SOCK_STREAM for protocol</span>
+
+<span class="hljs-comment"># Optional but recommended: Print out statements at every significant </span>
+<span class="hljs-comment"># step of your program, for example: print out the ip address and port</span>
+<span class="hljs-comment"># once you bind the socket</span>
+<span class="hljs-comment"># print("socket binded to {}:{}".format(&lt;server_ip&gt;, &lt;args.port&gt;))</span>
+
+<span class="hljs-comment"># put the socket into listening mode</span>
+<span class="hljs-comment"># &lt;your server socket object&gt;.listen(5)</span>
+print(<span class="hljs-string">"socket is listening"</span>)
+
+<span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+    print(<span class="hljs-string">'Ready to serve...'</span>)
+    <span class="hljs-comment"># Establish connection with client</span>
+    <span class="hljs-comment"># print('Received a connection from:', &lt;addr, port of client&gt;)</span>
+
+    <span class="hljs-comment"># Receive requests (HTTP GET) from the client</span>
+
+    <span class="hljs-comment"># Extract the required information from the client request:</span>
+    <span class="hljs-comment"># eg. webpage and file names</span>
+
+    <span class="hljs-keyword">try</span>:
+        <span class="hljs-comment"># Check whether the required files exist in the cache</span>
+        <span class="hljs-comment"># if yes,load the file and send a response back to the client</span>
+        <span class="hljs-comment"># print('Read file from cache')</span>
+
+    <span class="hljs-comment"># Error handling for file not found in cache</span>
+    <span class="hljs-keyword">except</span> IOError:
+        <span class="hljs-comment"># Since the required files were not found in cache,</span>
+        <span class="hljs-comment"># create a socket on the proxy server to send the request</span>
+        <span class="hljs-comment"># to the actual webserver</span>
+
+        <span class="hljs-keyword">try</span>:
+            <span class="hljs-comment"># Connect your client socket to the webserver at port 80</span>
+            <span class="hljs-comment"># print("connected to", hostname, hostIP)</span>
+
+            <span class="hljs-keyword">try</span>:
+                <span class="hljs-comment"># send request to the webserver</span>
+                <span class="hljs-comment"># recieve response from the webserver</span>
+                <span class="hljs-comment"># print("Received response from webserver")</span>
+
+                <span class="hljs-comment"># relay response back to the client</span>
+                <span class="hljs-comment"># print("relayed")</span>
+
+                <span class="hljs-comment"># Create a new file in the cache for the requested file</span>
+                <span class="hljs-comment"># and save the response for any future requests from the client</span>
+
+            <span class="hljs-keyword">except</span>:
+                print(<span class="hljs-string">"Request to the webserver failed"</span>)
+
+            <span class="hljs-comment"># Close the client socket</span>
+
+       <span class="hljs-keyword">except</span>:
+           <span class="hljs-comment"># Unable to connect to the webserver</span>
+           <span class="hljs-comment"># print("Unable to connect to the webserver")</span>
+</code></pre><h3 id="notes-">Notes:</h3>
+<ol>
+<li>When using recv() method, the buffer size you set might not be enough for some messages, think of what to do when the message &gt; buffer size.</li>
+<li>Many websites have moved on from serving HTTP requests in favor of HTTPS, for such websites you might receive a “301 Moved Permanently” message. Some websites that still work on HTTP: www.google.com, www.example.com, try out with other websites and observe.</li>
+<li>Modern webpages have multiple elements on them (text, images, etc), when you type a URL into your browser, multiple requests are sent to the respective server, you need to take into account that when you request for a webpage, there will be multiple GET requests to the server for various files.</li>
+<li>We will only concentrate on getting one object, either it is html text, image, etc., ignore the follow-up requests from a website.</li>
+<li>Configuring a browser part is not required.</li>
+<li>In analysis, showing your results in a graph is optional.</li>
+</ol>
