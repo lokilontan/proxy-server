@@ -16,7 +16,7 @@ if not os.path.exists("cache/"):
     os.makedirs("cache/")
 
 # Assign a port number
-tcp_server_port = 8868
+tcp_server_port = 8888
 
 # Bind the socket to server address and server port
 tcpSerSock.bind(("", tcp_server_port))
