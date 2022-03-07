@@ -1,6 +1,8 @@
 import os
 from socket import *
 import sys
+import time
+
 
 if len(sys.argv) <= 1:
     print('Usage : "python ProxyServer.py server_ip"\n[server_ip : It is the IP Address Of Proxy Server')
@@ -31,6 +33,9 @@ while 1:
     print('Ready to serve...')
     tcpCliSock, addr = tcpSerSock.accept()
     print('Received a connection from:', addr)
+
+    # Start measuring the time
+    start_time = time.time()
 
     # Fill in start.
 
@@ -68,7 +73,7 @@ while 1:
         outputdata = f.readlines()
         fileExist = "true"
 
-        # ProxyServer finds a cache hit and generates a response message
+        # Cached file already contains the header
         #tcpCliSock.send("HTTP/1.0 200 OK\r\n".encode())
         #tcpCliSock.send("Content-Type:text/html\r\n\r\n".encode())
 
@@ -82,7 +87,7 @@ while 1:
         # Fill in end.
 
         print('Read from cache')
-    
+
     # Error handling for file not found in cache
     except IOError:
         if fileExist == "false":
@@ -140,10 +145,12 @@ while 1:
                 tcpCliSock.send("\r\n".encode())
 
                 tcpProxyCliSock.close()
+
                 # Fill in end.
 
             except Exception as e:
                 print("Illegal request: ", e)
+
         #else:
             # HTTP response message for file not found
             # Isn't that true that you never get into this block?
@@ -156,6 +163,10 @@ while 1:
 
     #Close the client and the server sockets
     tcpCliSock.close()
+    
+    end_time = time.time()
+
+    print("Load time: ", end_time - start_time)
 
 # Fill in start.
 tcpSerSock.close()
